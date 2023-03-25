@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% load wagtailimages_tags %}
+
+{% block content %}
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold">{{ self.title}}</h1>
+    {% image page.image width-400 %}
+    <p></br>Please contact us at 15313621879 or chenzuoli709@163.com</p>
+</div>
+{% endblock %}
