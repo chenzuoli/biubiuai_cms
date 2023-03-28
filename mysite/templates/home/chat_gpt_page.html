@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+
+{% block content %}
+  <h1>Chatbot</h1>
+  <p>Welcome to our chatbot! How can we assist you today?</p>
+  <div class="chat-container">
+    <div class="chat-history">
+      {% for message in messages %}
+        {% if message.sender == 'user' %}
+          <div class="message user-message">
+            <p>{{ message.content }}</p>
+          </div>
+        {% else %}
+          <div class="message bot-message">
+            <p>{{ message.content }}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="chat-input">
+      <form method="POST" action="{% pageurl page %}">
+        {% csrf_token %}
+        <input type="text" name="message" placeholder="Type your message here...">
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+
+
+<script>
+  const chatHistory = document.querySelector('.chat-history');
+  const chatInput = document.querySelector('.chat-input input');
+  const chatForm = document.querySelector('.chat-input form');
+
+  chatForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const message = chatInput.value;
+    chatInput.value = '';
+    const userMessage = document.createElement('div');
+    userMessage.classList.add('message', 'user-message');
+    userMessage.innerHTML = `<p>${message}</p>`;
+    chatHistory.appendChild(userMessage);
+
+    fetch('http://43.153.35.39:3080', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message })
+    })
+      .then(response => response.json())
+      .then(data => {
+        const botMessage = document.createElement('div');
+        botMessage.classList.add('message', 'bot-message');
+        botMessage.innerHTML = `<p>${data.message}</p>`;
+        chatHistory.appendChild(botMessage);
+      })
+      .catch(error => console.error(error));
+  });
+</script>

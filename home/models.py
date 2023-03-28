@@ -144,3 +144,14 @@ class BlogPageRelatedLink(Orderable):
         FieldPanel('name'),
         FieldPanel('url'),
     ]
+
+class ChatGPTPage(Page):
+    body = RichTextField(blank=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('body', classname="full"),
+    ]
+
+    subpage_types = []
+
+    parent_page_types = ['home.HomePage']
