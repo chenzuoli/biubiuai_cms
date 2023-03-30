@@ -36,6 +36,22 @@ class HomePage(Page):
         blank=False
     )
 
+    texttoimg = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        blank=False
+    )
+
+    imgtoimg = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        blank=True
+    )
+
     banner_ctl = models.ForeignKey(
         "wagtailcore.Page",
         null=True,
@@ -49,6 +65,8 @@ class HomePage(Page):
         FieldPanel('banner_subtitle'),
         FieldPanel("banner_image"),
         FieldPanel("chatboximage"),
+        FieldPanel("texttoimg"),
+        FieldPanel("imgtoimg"),
         PageChooserPanel("banner_ctl")
     ]
 
