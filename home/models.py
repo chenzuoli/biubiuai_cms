@@ -1,7 +1,5 @@
 from django.db import models
 
-from wagtail.models import Page
-
 from modelcluster.fields import ParentalKey
 
 from wagtail.models import Page, Orderable
@@ -163,6 +161,7 @@ class BlogPageRelatedLink(Orderable):
         FieldPanel('url'),
     ]
 
+
 class ChatGPTPage(Page):
     body = RichTextField(blank=True)
 
@@ -173,3 +172,39 @@ class ChatGPTPage(Page):
     subpage_types = []
 
     parent_page_types = ['home.HomePage']
+
+
+# chatbotOnlinePage model for chatbot_online_page.html
+class ChatbotOnlinePage(Page):
+    template = "home/chatbot_online_page.html"
+
+    chatbot_online_title = models.CharField(max_length=100, blank=False, null=True)
+
+    chatbot_online_subtitle = RichTextField(features=["bold", "italic"])
+
+    chatbot_online_image = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+        related_name="+"
+    )
+
+    chatbot_online_ctl = models.ForeignKey(
+        "wagtailcore.Page",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+"
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel('chatbot_online_title'),
+        FieldPanel('chatbot_online_subtitle'),
+        FieldPanel("chatbot_online_image"),
+        PageChooserPanel("chatbot_online_ctl")
+    ]
+
+    class Meta:
+        verbose_name = "Chatbot Online Page"
+        verbose_name_plural = "ChatbotOnlinePages"
