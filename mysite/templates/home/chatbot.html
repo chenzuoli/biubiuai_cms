@@ -1,5 +1,6 @@
 <div class="container">
     <div class="row">
+        <!-- chatbot -->
         <div class="col-md-6 offset-md-3">
             <div class="card" style="height: 500px;">
                 <div class="card-header bg-primary text-white">
@@ -11,6 +12,7 @@
                     </div>
                 </div>
             </div>
+            <br>
             <form id="chatbot-form">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" id="chatbot-input" placeholder="Type your message here...">
@@ -20,5 +22,42 @@
                 </div>
             </form>
         </div>
+
+        <!-- chatgpt role choossen -->
+        <!-- // 设置一个下拉框，让用户选择chatgpt的角色，比如客服、翻译官、讲故事的人 -->
+        <div class="col-md-6 offset-md-3">
+            <div class="form-group">
+                <label for="chatgpt-role">Choose a role for chatgpt</label>
+                <select class="form-control" id="chatgpt-role">
+                    <option value="qa">Q&A</option>
+                    <option value="grammar_correction_gpt">Grammar Correction</option>
+                    <option value="summarizer_gpt">Summarizer for 2nd grader</option>
+                    <option value="natural_lang_to_openai_api_gpt">Natural Language to OpenAI api</option>
+                    <option value="text_to_command">Text to Command</option>
+                    <option value="text_to_code">Text to Code</option>
+                    <option value="text_to_sql">Text to SQL</option>
+                    <option value="text_to_uml">Text to UML</option>
+                    <option value="natural_lang_to_stripe_api_gpt">Natural Language to Stripe api</option>
+                    <option value="customer">Customer</option>
+                    <option value="storyteller">Storyteller</option>
+                    <option value="translator">Translator</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="lawyer">Lawyer</option>
+                    <option value="doctor">Doctor</option>
+                    <option value="engineer">Engineer</option>
+                    <option value="salesman">Salesman</option>
+                    <option value="police">Police</option>
+                    <option value="journalist">Journalist</option>
+                    <option value="psychologist">Psychologist</option>
+                    <option value="therapist">Therapist</option>
+                    <option value="nurse">Nurse</option>
+                    <option value="artist">Artist</option>
+                    <option value="musician">Musician</option>
+                    <option value="chef">Chef</option>                    
+                </select>
+            </div>
+        </div>
+
+        <!-- advanced parameters -->
     </div>
 </div>

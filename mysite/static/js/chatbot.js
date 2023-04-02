@@ -1,6 +1,5 @@
-import { OpenAI } from "./openai.js";
-
-const openai = new OpenAI(process.env.OPENAI_API_KEY);
+// import { OpenAI } from "./openai.js";
+// const openai = new OpenAI(process.env.OPENAI_API_KEY);
 
 // import { Configuration, OpenAIApi } from "../node_modules/openai";
 // const configuration = new Configuration({
@@ -33,25 +32,19 @@ function getChatbotResponse(userMessage) {
   //   stop: ["\n", "AI:"],
   // });
   // response = gptResponse.data.choices[0].text;
-  // request to 43.153.35.39:3080 to get response, add parameter "userMessage" to the request
-  const gptResponse = axios.post("http://43.153.35.39:3080", {
-    userMessage: prompt,
-    // add body parameters here
-    body: {
-      message: prompt,
-      model: "davinci",
-      maxTokens: 1024,
-      temperature: 0.7,
-      topP: 1,
-      presencePenalty: 0,
-      frequencyPenalty: 0,
-      bestOf: 1,
-      n: 1,
-      stream: false,
-      stop: ["\n", "AI:"],
-    },
-  });
-  response = gptResponse.data;
+  // request to 43.153.35.39:3080 to get response, add parameter "userMessage" to the request, don't use axios
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "http://43.153.35.39:3080/");
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      response = xhr.responseText;
+      displayResponse(response);
+    } else {
+      console.log("Request failed.  Returned status of " + xhr.status);
+    }
+  };
+  xhr.send(JSON.stringify({ userMessage: userMessage }));
 
   return response;
 }

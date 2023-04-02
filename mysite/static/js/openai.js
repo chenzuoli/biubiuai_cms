@@ -1,4 +1,5 @@
-import { Configuration, OpenAIApi } from './../node_modules/openai';
+// import { Configuration, OpenAIApi } from './../node_modules/openai';
+
 export class OpenAI {
     constructor(apiKey) {
         // Create the Configuration and OpenAIApi instances
