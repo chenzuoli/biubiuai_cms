@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="container p-4">
+    <h1>Chat with our bot</h1>
+    <div id="chatbot">
+        <div id="messages"></div>
+        <div id="input-container">
+            <input type="text" id="user-input">
+            <button id="send-btn">Send</button>
+            <div id="role-container">
+                <input type="radio" name="chatgpt-role" value="customer" checked>Customer
+                <input type="radio" name="chatgpt-role" value="storyteller">Storyteller
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- include any additional JavaScript code here -->
+<script src="{% static './js/openai_chatbot.js' %}"></script>
+
+{% endblock %}

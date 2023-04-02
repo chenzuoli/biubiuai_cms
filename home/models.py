@@ -178,7 +178,8 @@ class ChatGPTPage(Page):
 class ChatbotOnlinePage(Page):
     template = "home/chatbot_online_page.html"
 
-    chatbot_online_title = models.CharField(max_length=100, blank=False, null=True)
+    chatbot_online_title = models.CharField(
+        max_length=100, blank=False, null=True)
 
     chatbot_online_subtitle = RichTextField(features=["bold", "italic"])
 
@@ -208,3 +209,15 @@ class ChatbotOnlinePage(Page):
     class Meta:
         verbose_name = "Chatbot Online Page"
         verbose_name_plural = "ChatbotOnlinePages"
+
+
+class OpenaiChatbotPage(Page):
+    body = RichTextField(blank=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('body'),
+    ]
+
+    subpage_types = []
+
+    parent_page_types = ['home.HomePage']

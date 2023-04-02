@@ -1,9 +1,24 @@
-<div id="chatbot-container">
-    <div id="chatbot-history">
-        <!-- previous chat messages will be displayed here -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card" style="height: 500px;">
+                <div class="card-header bg-primary text-white">
+                    Chat with our Bot
+                </div>
+                <div class="card-body" id="chatbot-container" style="overflow-y: scroll;">
+                    <div id="chatbot-history">
+                        <!-- previous chat messages will be displayed here -->
+                    </div>
+                </div>
+            </div>
+            <form id="chatbot-form">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="chatbot-input" placeholder="Type your message here...">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    <form id="chatbot-form">
-        <input type="text" id="chatbot-input" placeholder="Type your message here...">
-        <button type="submit">Send</button>
-    </form>
 </div>
