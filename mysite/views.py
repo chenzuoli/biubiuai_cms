@@ -4,6 +4,7 @@ import openai
 import os
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
+import logging
 
 
 def home(request):
@@ -60,7 +61,7 @@ def chatgpt(request, method="POST"):
 
     openai.api_key = os.getenv("OPENAI_API_KEY")
     # print("openai.api_key:" + str(openai.api_key))
-    prompt = prompt
+    logging.info("prompt:" + str(prompt))
     res = openai.Completion.create(
         engine="text-davinci-003",
         prompt=f"{basePrefixPrompt}\n\nYou:{prompt}\n\nAI:",
@@ -68,9 +69,10 @@ def chatgpt(request, method="POST"):
         max_tokens=1024
     )
 
-    print("res.choices[0].text:" + str(res.choices[0].text))
-    res = {"message": res.choices[0].text, "status_code": 200, "status": "success"}
-    response = HttpResponse(res, content_type="application/json")
+    logging.info("res.choices[0].text:" + str(res.choices[0].text))
+    res = {"message": res.choices[0].text,
+           "status_code": 200, "status": "success"}
+    response = HttpResponse(str(res), content_type="application/json")
     response.status_code = 200
     return response
 
