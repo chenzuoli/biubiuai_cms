@@ -67,7 +67,7 @@ def chatgpt(request, method="POST"):
         max_tokens=1024
     )
     print("response.choices[0].text:" + str(response.choices[0].text))
-    return {"message": response.choices[0].text}
+    return {"message": response.choices[0].text, "status_code": 200}
 
 
 def qa_gpt(request):
