@@ -48,7 +48,7 @@ function getChatbotResponse(userMessage, chatTextHistory) {
   // xhr.send(JSON.stringify({ message: userMessage }));
 
   // use "fetch" to request 43.153.35.39:3080 to get response add parameter "userMessage"
-  fetch("http://43.153.35.39/chatgpt", {
+  fetch("http://43.153.35.39/chatgpt/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
