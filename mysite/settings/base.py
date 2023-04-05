@@ -63,12 +63,14 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ALLOWED_ORIGINS = [
-    "https://example.com",
-    "https://sub.example.com",
     "http://localhost:8080",
     "http://127.0.0.1:8080",
-    "http://127.0.0.1:8080",
-    "http://43.153.35.39:3080"
+    "http://43.153.35.39:3080",
+    "http://43.153.35.39",
+    "http://43.153.35.39:80",
+    "http://biubiuai.com:3080",
+    "http://biubiuai.com",
+    "http://biubiuai.com:3000"
 ]
 
 ROOT_URLCONF = "mysite.urls"
