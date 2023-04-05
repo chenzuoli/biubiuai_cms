@@ -49,7 +49,7 @@ def chenzuoli(request):
 
 
 @csrf_exempt
-def chatgpt(request, method="POST"):
+def chatgpt(request, response, method="POST"):
     # create a post request to openai api, and return the response, add a parameter: prompt
     # CSRF cookie set.
     # request to openai api to get response
@@ -60,14 +60,15 @@ def chatgpt(request, method="POST"):
     openai.api_key = os.getenv("OPENAI_API_KEY")
     # print("openai.api_key:" + str(openai.api_key))
     prompt = prompt
-    response = openai.Completion.create(
+    res = openai.Completion.create(
         engine="text-davinci-003",
         prompt=f"{basePrefixPrompt}\n\nYou:{prompt}\n\nAI:",
         temperature=0.7,
         max_tokens=1024
     )
-    print("response.choices[0].text:" + str(response.choices[0].text))
-    return {"message": response.choices[0].text, "status_code": 200}
+    print("res.choices[0].text:" + str(res.choices[0].text))
+    response = {"message": res.choices[0].text, "status_code": 200}
+    return response
 
 
 def qa_gpt(request):
