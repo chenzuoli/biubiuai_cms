@@ -11,9 +11,10 @@
 const chatbotForm = document.querySelector("#chatbot-form");
 const chatbotInput = document.querySelector("#chatbot-input");
 const chatbotHistory = document.querySelector("#chatbot-history");
+let chatTextHistory = "";
 
 
-function getChatbotResponse(userMessage) {
+function getChatbotResponse(userMessage, chatTextHistory) {
   // generate chatbot response based on user input
   let response = "";
   // request to openai api to get response, use OPENAI_API_KEY environment variable to store the key
@@ -33,19 +34,35 @@ function getChatbotResponse(userMessage) {
   // });
   // response = gptResponse.data.choices[0].text;
   // request to 43.153.35.39:3080 to get response, add parameter "userMessage" to the request, don't use axios
-  const xhr = new XMLHttpRequest();
-  xhr.open("POST", "http://43.153.35.39:3080/");
-  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  xhr.onload = function () {
-    if (xhr.status === 200) {
-      response = xhr.responseText;
-      displayResponse(response);
-    } else {
-      console.log("Request failed.  Returned status of " + xhr.status);
-    }
-  };
-  xhr.send(JSON.stringify({ userMessage: userMessage }));
+  // const xhr = new XMLHttpRequest();
+  // xhr.open("POST", "http://43.153.35.39:3080/");
+  // xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  // xhr.onload = function () {
+  //   if (xhr.status === 200) {
+  //     response = xhr.responseText;
+  //     displayResponse(response);
+  //   } else {
+  //     console.log("Request failed.  Returned status of " + xhr.status);
+  //   }
+  // };
+  // xhr.send(JSON.stringify({ message: userMessage }));
 
+  // use "fetch" to request 43.153.35.39:3080 to get response add parameter "userMessage"
+  fetch("http://43.153.35.39:3080/chat", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ message: userMessage, basePromptPrefix: chatTextHistory }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      response = data.message;
+      displayResponse(response);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
   return response;
 }
 
@@ -75,7 +92,7 @@ function displayResponse(response) {
   document.getElementById("chatbot-input").value = '';
 
   // scroll to the bottom of the chatbot history
-  chatbot.scrollChatbot();
+  scrollChatbot();
 }
 
 // scroll to the bottom of the chatbot history
@@ -100,7 +117,10 @@ chatbotForm.addEventListener("submit", function (e) {
   const userMessage = "You: " + chatbotInput.value;
 
   // generate chatbot response based on user input
-  const chatbotResponse = "AI: " + getChatbotResponse(userMessage);
+  const chatbotResponse = "AI: " + getChatbotResponse(userMessage, chatTextHistory);
+
+  // add user message and chatbot response to chat history
+  chatTextHistory += userMessage + "\n" + chatbotResponse + "\n";
 
   // append user message and chatbot response to chat history
   const messageContainer = document.createElement("div");
