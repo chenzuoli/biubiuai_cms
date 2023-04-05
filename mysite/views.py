@@ -3,6 +3,7 @@ from django.shortcuts import render
 import openai
 import os
 from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 
 
 def home(request):
@@ -49,7 +50,7 @@ def chenzuoli(request):
 
 
 @csrf_exempt
-def chatgpt(request, response, method="POST"):
+def chatgpt(request, method="POST"):
     # create a post request to openai api, and return the response, add a parameter: prompt
     # CSRF cookie set.
     # request to openai api to get response
@@ -66,8 +67,11 @@ def chatgpt(request, response, method="POST"):
         temperature=0.7,
         max_tokens=1024
     )
+
     print("res.choices[0].text:" + str(res.choices[0].text))
-    response = {"message": res.choices[0].text, "status_code": 200}
+    res = {"message": res.choices[0].text, "status_code": 200, "status": "success"}
+    response = HttpResponse(res, content_type="application/json")
+    response.status_code = 200
     return response
 
 
