@@ -47,7 +47,7 @@ function scrollChatbot() {
 }
 
 
-// display the response from the ChatGPT API
+// display the response from the ChatGPT API， 缓慢显示响应结果，利用setInterval方法，每隔一段时间显示一部分
 function displayResponse(response) {
   // display the user input
   const userInput = document.getElementById("chatbot-input").value.trim();
@@ -59,7 +59,9 @@ function displayResponse(response) {
   // display the ChatGPT response
   const chatbotResponse = document.createElement("div");
   chatbotResponse.classList.add("message", "chatbot-message");
-  chatbotResponse.innerHTML = `<div class="message-text">${response}</div>`;
+  const messageText = document.createElement("div");
+  messageText.classList.add("message-text");
+  chatbotResponse.appendChild(messageText);
   document.getElementById("chatbot-history").appendChild(chatbotResponse);
 
   // clear the user input field
@@ -67,6 +69,17 @@ function displayResponse(response) {
 
   // scroll to the bottom of the chatbot history
   scrollChatbot();
+
+  // use setInterval to display the response slowly
+  let i = 0;
+  const intervalId = setInterval(() => {
+    if (i >= response.length) {
+      clearInterval(intervalId);
+      return;
+    }
+    messageText.innerHTML += response.charAt(i);
+    i++;
+  }, 50);
 }
 
 // scroll to the bottom of the chatbot history
