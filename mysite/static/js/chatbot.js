@@ -19,41 +19,15 @@ function getChatbotResponse(userMessage, chatTextHistory) {
   let response = "";
   // request to openai api to get response, use OPENAI_API_KEY environment variable to store the key
   const prompt = "You: " + userMessage
-  // const gptResponse = openai.complete({
-  //   engine: "davinci",
-  //   prompt: prompt,
-  //   maxTokens: 100,
-  //   temperature: 0.7,
-  //   topP: 1,
-  //   presencePenalty: 0,
-  //   frequencyPenalty: 0,
-  //   bestOf: 1,
-  //   n: 1,
-  //   stream: false,
-  //   stop: ["\n", "AI:"],
-  // });
-  // response = gptResponse.data.choices[0].text;
-  // request to 43.153.35.39:3080 to get response, add parameter "userMessage" to the request, don't use axios
-  // const xhr = new XMLHttpRequest();
-  // xhr.open("POST", "http://43.153.35.39:3080/");
-  // xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  // xhr.onload = function () {
-  //   if (xhr.status === 200) {
-  //     response = xhr.responseText;
-  //     displayResponse(response);
-  //   } else {
-  //     console.log("Request failed.  Returned status of " + xhr.status);
-  //   }
-  // };
-  // xhr.send(JSON.stringify({ message: userMessage }));
 
   // use "fetch" to request 43.153.35.39:3080 to get response add parameter "userMessage"
+  console.log("user message: " + userMessage)
   fetch("http://43.153.35.39/chatgpt/", {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ message: userMessage, basePromptPrefix: chatTextHistory }),
+    body: JSON.stringify({ "message": userMessage, "basePrefixPrompt": chatTextHistory })
   })
     .then((response) => response.json())
     .then((data) => {

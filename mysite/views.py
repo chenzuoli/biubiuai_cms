@@ -3,8 +3,9 @@ from django.shortcuts import render
 import openai
 import os
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
+from django.http import JsonResponse
 import logging
+import json
 
 
 def home(request):
@@ -51,13 +52,25 @@ def chenzuoli(request):
 
 
 @csrf_exempt
-def chatgpt(request, method="POST"):
+def chatgpt(request):
     # create a post request to openai api, and return the response, add a parameter: prompt
     # CSRF cookie set.
     # request to openai api to get response
     # get the parameter: message
-    prompt = request.GET.get('message')
-    basePrefixPrompt = request.GET.get('basePrefixPrompt')
+    # check if the parameter is being sent as a POST request
+    request.json = json.loads(request.body)
+    prompt = request.json.get('message')
+    basePrefixPrompt = request.json.get('basePrefixPrompt')
+    # if request.method == "POST":
+    #     prompt = request.POST.get('message')
+    #     basePrefixPrompt = request.POST.get('basePrefixPrompt')
+    # else:
+    #     # if not, check if it's being sent as a GET request
+    #     prompt = request.GET.get('message')
+    #     basePrefixPrompt = request.GET.get('basePrefixPrompt')
+    
+    print(prompt)
+    print(basePrefixPrompt)
 
     openai.api_key = os.getenv("OPENAI_API_KEY")
     # print("openai.api_key:" + str(openai.api_key))
@@ -72,7 +85,7 @@ def chatgpt(request, method="POST"):
     logging.info("res.choices[0].text:" + str(res.choices[0].text))
     res = {"message": res.choices[0].text,
            "status_code": 200, "status": "success"}
-    response = HttpResponse(str(res), content_type="application/json")
+    response = JsonResponse(res)
     response.status_code = 200
     return response
 
