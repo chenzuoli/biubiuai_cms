@@ -22,7 +22,7 @@ function getChatbotResponse(userMessage, chatTextHistory) {
   // use "fetch" to request 43.153.96.195 to get response add parameter "userMessage"
   console.log("user message: " + userMessage)
   fetch("http://43.153.96.195/chatgpt/", {
-    method: "GET",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
@@ -34,7 +34,7 @@ function getChatbotResponse(userMessage, chatTextHistory) {
       displayResponse(response);
     })
     .catch((error) => {
-      //console.error(error);
+      console.error(error);
       console.log("error");
       //console.error("Error:", error);
     });
@@ -113,7 +113,23 @@ chatbotForm.addEventListener("submit", function (e) {
   const userMessage = "You: " + chatbotInput.value;
 
   // generate chatbot response based on user input
-  getChatbotResponse(userMessage, chatTextHistory);
+  const chatbotResponse = "AI: " + getChatbotResponse(userMessage, chatTextHistory);
+
+  // add user message and chatbot response to chat history
+  chatTextHistory += userMessage + "\n" + chatbotResponse + "\n";
+
+  // append user message and chatbot response to chat history
+  const messageContainer = document.createElement("div");
+  messageContainer.classList.add("message-container");
+  const userMessageElement = document.createElement("p");
+  userMessageElement.classList.add("user-message");
+  userMessageElement.textContent = userMessage;
+  messageContainer.appendChild(userMessageElement);
+  const chatbotResponseElement = document.createElement("p");
+  chatbotResponseElement.classList.add("chatbot-message");
+  chatbotResponseElement.textContent = chatbotResponse;
+  messageContainer.appendChild(chatbotResponseElement);
+  chatbotHistory.appendChild(messageContainer);
 
   // clear the input field for the next message
   chatbotInput.value = "";
