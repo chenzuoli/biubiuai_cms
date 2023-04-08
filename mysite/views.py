@@ -19,14 +19,24 @@ def text_to_image(request):
 # add a request to openai api, and return the response, add a parameter: prompt
 
 
+@csrf_exempt
 def chenzuoli(request):
     # request to openai api to get response
     # get the parameter: prompt
-    prompt = request.GET.get('prompt')
+    # Forbidden (CSRF cookie not set.): /chenzuoli/
+    # https://stackoverflow.com/questions/40340595/django-csrf-cookie-not-set
+
+    request.json = json.loads(request.body)
+    prompt = request.json.get('message')
+    basePrefixPrompt = request.json.get('basePrefixPrompt')
+
+    print(prompt)
+    print(basePrefixPrompt)
+    print(f"{basePrefixPrompt}\n\nYou:{prompt}\n\nAI:")
 
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
-    basePromptPrefix = """
+    prePrefixPrompt = """
     我有许多个博客网站，一般在github pages上写的比较全\n
     另外csdn和知乎偶尔写一些，记录一些可能经常用到的东西，后面可以自己查看。\n
     https://chenzuoli.github.io/\n
@@ -35,12 +45,13 @@ def chenzuoli(request):
     我的微信公众号：程序员写书，里面最近记录的是关于商业的知识，欢迎关注👏🏻\n
     学习股票交易中，也在学习AIGC、ChatGPT，不想被AI替代\n
     最近在做AI相关的项目,想帮助那些恐惧AI的人,不被替代.\n
+    最近做的AI项目：http://www.biubiuai.com/\n
     这是我的个人简历：https://chenzuoli.github.io/2021/09/27/%E4%B8%AA%E4%BA%BA%E7%AE%80%E5%8E%86/ 欢迎骚扰\n
     """
 
-    response = openai.Completion.create(
+    res = openai.Completion.create(
         engine="text-davinci-003",
-        prompt=basePromptPrefix + prompt,
+        prompt=f"{prePrefixPrompt}\n\n{basePrefixPrompt}\n\nYou:{prompt}\n\nAI:",
         temperature=0.7,
         max_tokens=1024,
         top_p=1,
@@ -48,6 +59,12 @@ def chenzuoli(request):
         presence_penalty=0.6,
         stop=["\n", " Human:", " AI:"]
     )
+
+    logging.info("res.choices[0].text:" + str(res.choices[0].text))
+    res = {"message": res.choices[0].text,
+           "status_code": 200, "status": "success"}
+    response = JsonResponse(res)
+    response.status_code = 200
     return response
 
 
@@ -60,7 +77,7 @@ def chatgpt(request):
     request.json = json.loads(request.body)
     prompt = request.json.get('message')
     basePrefixPrompt = request.json.get('basePrefixPrompt')
-    
+
     print(prompt)
     print(basePrefixPrompt)
     print(f"{basePrefixPrompt}\n\nYou:{prompt}\n\nAI:")

@@ -8,13 +8,14 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 from search import views as search_views
 
-from .views import chatgpt, qa_gpt, grammar_correction_gpt, summarizer_gpt, natural_lang_to_openai_api_gpt, text_to_command, translator, natural_lang_to_stripe_api_gpt
+from .views import chenzuoli, chatgpt, qa_gpt, grammar_correction_gpt, summarizer_gpt, natural_lang_to_openai_api_gpt, text_to_command, translator, natural_lang_to_stripe_api_gpt
 
 urlpatterns = [
     path("django-admin/", admin.site.urls),
     path("admin/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
     path("search/", search_views.search, name="search"),
+    path("chenzuoli/", chenzuoli, name="chenzuoli"),
     path('chatgpt/', chatgpt, name='chatgpt'),
     path('qa_gpt/', qa_gpt, name='qa_gpt'),
     path('grammar_correction_gpt/', grammar_correction_gpt, name='grammar_correction_gpt'),
