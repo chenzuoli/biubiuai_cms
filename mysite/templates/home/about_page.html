@@ -1,13 +1,38 @@
-
 {% extends "base.html" %}
 
-{% load wagtailcore_tags %}
-
-{% block body_class %}template-aboutpage{% endblock %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
-<div class="px-4 py-5 my-5 text-center">
-    <!-- <h1 class="display-5 fw-bold">{{ self.title}}</h1> -->
-    <div>{{ page.content|richtext }}</div>
+
+{% image page.aboutimg fill-500x300 as aboutimg %}
+
+<div class="container p-4">
+    <h3>{{ page.title }}</h3>
+</div>
+<div class="container p-4">
+    <div class="row">
+        <!-- 文字靠右排列 -->
+        <div class="col-md-6  d-flex align-items-center">
+            <div class="container p-4 text-end">
+                {{ page.aboutcontact|richtext }}
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="container p-4">
+                <img src="{{ aboutimg.url }}" class="rounded mx-auto d-block" alt="{{ aboutimg.title }}">
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="container p-4 content">
+            {{ page.content|richtext }}
+        </div>
+    </div>
 </div>
 {% endblock %}

@@ -3,6 +3,8 @@
 
 {% block content %}
 
+<!-- 要放在block content之后 -->
+{% image self.baseimg fill-500x300 as baseimg %}
 {% image self.banner_image original as logoimg %}
 {% image self.chatboximage fill-500x300 as chatboximage %}
 {% image self.texttoimg fill-500x300 as texttoimg %}
@@ -10,30 +12,37 @@
 
 <!-- firstpage -->
 
-<div class="container p-4">
-  <h1>欢迎来到BiuBiuAI人工智能学习网站</h1>
-
-  </br>
-  <p>介绍我们的人工智能初学者网站！</p>
-  <p>我们的平台旨在教授初学者使用人工智能工具所需的基本技能。</p>
-  <p>我们知道人工智能正在改变我们生活的世界，每个人都学习必要的技能以保持领先地位至关重要。</p>
-  <p>我们的网站非常适合那些新接触人工智能世界并想要学习如何利用人工智能工具获得优势的人。</p>
-  <p>我们相信，只要掌握了正确的技能和方法，任何人都可以从人工智能及其功能中受益。</p>
-  <p>我们的网站专注于提供全面的课程，涵盖人工智能的基础知识，并逐渐向高级概念发展。</p>
-  <p>我们的平台旨在赋予个人学习人工智能技能并将其用于各自领域的能力。</p>
-  <p>我们认为，人工智能不应该取代人类工作，而应该是增强它们。</p>
-  <p>通过我们的网站，您可以学习如何使用人工智能工具和技术来改进您的工作并保持竞争优势。</p>
-  <p>无论您是学生、专业人士还是对人工智能感兴趣的人，我们的网站都有适合每个人的内容。</p>
-  <p>我们易于使用的界面和引人入胜的内容使学习人工智能变得有趣且易于理解。现在加入我们，成为人工智能革命的一部分！</p>
+<br>
+<br>
+<br>
+<br>
+<div class="container p-4 text-center">
+  <h1>欢迎来到BiuBiuAI人工智能体验网站</h1>
 </div>
+<br>
 <div class="container p-4">
   <div class="row">
-    <!-- <div class="col-md-6 d-flex align-items-center"> -->
     <div class="col-md-6">
-      <p class="lead mb-4">{{ self.banner_subtitle|richtext }}</p>
-      <button type="button" class="btn btn-primary">
-        <!--  <a href="/chatgpt_online_demo" target="_blank" class="btn btn-primary">试试ChatGPT</a> -->
-        <a href="http://43.153.96.195:3000/" target="_blank" class="btn btn-primary">试试ChatGPT</a> </button>
+      <div class="container p-4">
+        <img src="{{ baseimg.url }}" class="rounded mx-auto d-block" alt="{{ baseimg.title }}">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="container text-start">
+        <p class="lead mb-4">{{ self.base_text|richtext }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 d-flex align-items-center">
+      <div class="row">
+        <p class="lead mb-4">{{ self.banner_subtitle|richtext }}</p>
+        <button type="button" class="btn btn-primary">
+          <!--  <a href="/chatgpt_online_demo" target="_blank" class="btn btn-primary">试试ChatGPT</a> -->
+          <a href="http://43.153.96.195:3000/" target="_blank" class="btn btn-primary">试试ChatGPT</a> 
+        </button>
+      </div>
     </div>
     <div class="col-md-6">
       <div class="container p-4">
@@ -42,13 +51,13 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6 d-flex justify-content-center align-items-center">
-      <p class="lead mb-4">{{ self.texttoimg.title }}</p>
-    </div>
     <div class="col-md-6">
       <div class="container p-4">
         <img src="{{ texttoimg.url }}" class="rounded mx-auto d-block" alt="{{ texttoimg.title }}">
       </div>
+    </div>
+    <div class="col-md-6 d-flex justify-content-center align-items-center">
+      <p class="lead mb-4">{{ self.texttoimg.title }}</p>
     </div>
   </div>
   <div class="row">

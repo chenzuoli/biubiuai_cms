@@ -26,6 +26,16 @@ class HomePage(Page):
         related_name="+"
     )
 
+    base_text = RichTextField(default="主页内容")
+
+    baseimg = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+        related_name="+"
+    )
+
     chatboximage = models.ForeignKey(
         "wagtailimages.Image",
         null=True,
@@ -61,6 +71,8 @@ class HomePage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('banner_title'),
         FieldPanel('banner_subtitle'),
+        FieldPanel("base_text"),
+        FieldPanel("baseimg"),
         FieldPanel("banner_image"),
         FieldPanel("chatboximage"),
         FieldPanel("texttoimg"),
@@ -77,9 +89,23 @@ class AboutPage(Page):
     # 关于我们页面有一个标题字段和一个内容字段
     content = RichTextField()
 
+    # contact info
+    aboutcontact = RichTextField(default="联系方式: 15313621879\n邮箱: chenzuoli709@163.com")
+
+    # about image
+    aboutimg = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        blank=True
+    )
+
     # 指定后台管理界面中可以编辑的字段
     content_panels = Page.content_panels + [
-        FieldPanel('content')
+        FieldPanel('content'),
+        FieldPanel('aboutcontact'),
+        FieldPanel('aboutimg')
     ]
 
 
