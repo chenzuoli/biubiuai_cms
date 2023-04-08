@@ -2,10 +2,10 @@
 from django.shortcuts import render
 import openai
 import os
+import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import logging
-import json
 
 
 def home(request):
@@ -57,20 +57,13 @@ def chatgpt(request):
     # CSRF cookie set.
     # request to openai api to get response
     # get the parameter: message
-    # check if the parameter is being sent as a POST request
     request.json = json.loads(request.body)
     prompt = request.json.get('message')
     basePrefixPrompt = request.json.get('basePrefixPrompt')
-    # if request.method == "POST":
-    #     prompt = request.POST.get('message')
-    #     basePrefixPrompt = request.POST.get('basePrefixPrompt')
-    # else:
-    #     # if not, check if it's being sent as a GET request
-    #     prompt = request.GET.get('message')
-    #     basePrefixPrompt = request.GET.get('basePrefixPrompt')
     
     print(prompt)
     print(basePrefixPrompt)
+    print(f"{basePrefixPrompt}\n\nYou:{prompt}\n\nAI:")
 
     openai.api_key = os.getenv("OPENAI_API_KEY")
     # print("openai.api_key:" + str(openai.api_key))
