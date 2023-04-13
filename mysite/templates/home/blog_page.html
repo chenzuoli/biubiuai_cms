@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+
+{% block content %}
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ page.title }}</h1>
+            <p>{{ page.date }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="blog-content">
+                {{ page.body|richtext }}
+            </div>
+            {% if page.link %}
+            <a href="{{ page.link }}">Related Link</a>
+            {% endif %}
+        </div>
+        <!-- youtube -->
+        <!-- <div class="col-md-6">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe width="733" height="412" src="https://www.youtube.com/embed/_AvJwpZQfTU" title="聊聊创业 | 关于我，和我的公司" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+        </div> -->
+        <!-- bilibili 居中显示-->
+        <div class="col-md-6">
+            <br>
+            <br>
+            <div class="embed-responsive embed-responsive-16by9">
+                {{ page.videourl|richtext }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -90,7 +90,8 @@ class AboutPage(Page):
     content = RichTextField()
 
     # contact info
-    aboutcontact = RichTextField(default="联系方式: 15313621879\n邮箱: chenzuoli709@163.com")
+    aboutcontact = RichTextField(
+        default="联系方式: 15313621879\n邮箱: chenzuoli709@163.com")
 
     # about image
     aboutimg = models.ForeignKey(
@@ -141,6 +142,16 @@ class BlogPage(Page):
 
     body = RichTextField()
     date = models.DateField("Post date")
+    videourl = models.CharField(max_length=500, blank=False, null=True)
+
+    blogimg = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+"
+    )
+
     feed_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -161,6 +172,8 @@ class BlogPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('date'),
         FieldPanel('body'),
+        FieldPanel('videourl'),
+        FieldPanel('blogimg'),
         InlinePanel('related_links', heading="Related links",
                     label="Related link"),
     ]

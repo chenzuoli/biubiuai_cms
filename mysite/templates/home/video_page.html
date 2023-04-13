@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+
+{% block content %}
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-8">
+            {% if block.block_type == 'video' %}
+            <h2>{{ block.value.title }}</h2>
+            {% with block.value.video as video %}
+            {% if video.type == 'video' %}
+            <video src="{{ video.url }}" controls></video>
+            {% elif video.type == 'audio' %}
+            <audio src="{{ video.url }}" controls></audio>
+            {% endif %}
+            {% endwith %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
