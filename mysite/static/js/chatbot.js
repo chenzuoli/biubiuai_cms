@@ -94,8 +94,8 @@ function getChatbotResponse(userMessage, chatTextHistory) {
     default:
       "/chatgpt/";
   }
-  // fetch("http://43.153.96.195" + openapi, {
-  fetch("http://127.0.0.1:8000" + openapi, {
+  fetch("http://43.153.96.195" + openapi, {
+  // fetch("http://127.0.0.1:8000" + openapi, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
