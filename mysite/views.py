@@ -78,10 +78,6 @@ def chatgpt(request):
     prompt = request.json.get('message')
     basePrefixPrompt = request.json.get('basePrefixPrompt')
 
-    print(prompt)
-    print(basePrefixPrompt)
-    print(f"{basePrefixPrompt}\n\nYou:{prompt}\n\nAI:")
-
     openai.api_key = os.getenv("OPENAI_API_KEY")
     # print("openai.api_key:" + str(openai.api_key))
     logging.info("prompt:" + str(prompt))
@@ -103,11 +99,13 @@ def chatgpt(request):
 def qa_gpt(request):
     # request to openai api to get response
     # get the parameter: prompt
-    prompt = request.GET.get('prompt')
+    request.json = json.loads(request.body)
+    prompt = request.json.get('message')
+    prefixPrompt = request.json.get('basePrefixPrompt')
 
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
-    basePromptPrefix = """I am a highly intelligent question answering bot. 
+    basePrompt = """I am a highly intelligent question answering bot. 
             If you ask me a question that is rooted in truth, I will give you the answer. 
             If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with Unknown.\n\n
             Q: What is human life expectancy in the United States?\n
@@ -124,10 +122,14 @@ def qa_gpt(request):
             A: The 1992 Olympics were held in Barcelona, Spain.\n\n
             Q: How many squigs are in a bonk?\nA: Unknown\n\n
             Q: Where is the Valley of Kings?\nA:\n"""
-
-    response = openai.Completion.create(
+    logging.info("prompt:" + str(prompt))
+    if prefixPrompt:
+        prompt = basePrompt + prefixPrompt + prompt
+    else:
+        prompt = basePrompt + prompt
+    res = openai.Completion.create(
         model="text-davinci-003",
-        prompt=basePromptPrefix + prompt,
+        prompt=prompt,
         temperature=0,
         max_tokens=100,
         top_p=1,
@@ -135,59 +137,78 @@ def qa_gpt(request):
         presence_penalty=0.0,
         stop=["\n"]
     )
-    return response.get('choices')[0].get('text')
+    logging.info("res.choices[0].text:" + str(res.choices[0].text))
+    res = {"message": res.choices[0].text,
+           "status_code": 200, "status": "success"}
+    response = JsonResponse(res)
+    response.status_code = 200
+    return response
 
 
 def grammar_correction_gpt(request):
     # request to openai api to get response
     # get the parameter: prompt
-    prompt = request.GET.get('prompt')
+    request.json = json.loads(request.body)
+    prompt = request.json.get('message')
 
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
-    basePromptPrefix = """
-    Correct this to standard English:\n\nShe no went to the market.\n"""
+    basePrompt = """
+    Correct this to standard English:\n\n"""
+    logging.info("prompt:" + str(prompt))
 
-    response = openai.Completion.create(
+    prompt = basePrompt + prompt
+    res = openai.Completion.create(
         model="text-davinci-003",
-        prompt=basePromptPrefix + prompt,
+        prompt=prompt,
         temperature=0,
         max_tokens=60,
         top_p=1.0,
         frequency_penalty=0.0,
         presence_penalty=0.0
     )
-
-    return response.get('choices')[0].get('text')
+    logging.info("res.choices[0].text:" + str(res.choices[0].text))
+    res = {"message": res.choices[0].text,
+           "status_code": 200, "status": "success"}
+    response = JsonResponse(res)
+    response.status_code = 200
+    return response
 
 
 def summarizer_gpt(request):
     """
     Summarize this for a second-grade student:
     """
-    import os
-    import openai
-
-    prompt = request.GET.get('prompt')
+    request.json = json.loads(request.body)
+    prompt = request.json.get('message')
+    prefixPrompt = request.json.get('basePrefixPrompt')
 
     openai.api_key = os.getenv("OPENAI_API_KEY")
+    logging.info("prompt:" + str(prompt))
 
-    basePromptPrefix = """
-    "Summarize this for a second-grade student:\n\n
-    Jupiter is the fifth planet from the Sun and the largest in the Solar System. It is a gas giant with a mass one-thousandth that of the Sun, but two-and-a-half times that of all the other planets in the Solar System combined. Jupiter is one of the brightest objects visible to the naked eye in the night sky, and has been known to ancient civilizations since before recorded history. It is named after the Roman god Jupiter.[19] When viewed from Earth, Jupiter can be bright enough for its reflected light to cast visible shadows,[20] and is on average the third-brightest natural object in the night sky after the Moon and Venus.\n"
+    basePrompt = """
+    "Summarize this for a second-grade student:\n\n\n"
     """
 
-    response = openai.Completion.create(
+    if prefixPrompt:
+        prompt = basePrompt + prefixPrompt + prompt
+    else:
+        prompt = basePrompt + prompt
+    res = openai.Completion.create(
         model="text-davinci-003",
-        prompt=basePromptPrefix + prompt,
+        prompt=prompt,
         temperature=0.7,
-        max_tokens=64,
+        max_tokens=1000,
         top_p=1.0,
         frequency_penalty=0.0,
         presence_penalty=0.0
     )
-
-    return response.get('choices')[0].get('text')
+    logging.info("res.choices[0].text:" + str(res.choices[0].text))
+    res = {"message": res.choices[0].text,
+           "status_code": 200, "status": "success"}
+    response = JsonResponse(res)
+    response.status_code = 200
+    return response
 
 
 def natural_lang_to_openai_api_gpt(request):
@@ -195,20 +216,24 @@ def natural_lang_to_openai_api_gpt(request):
     Create code to call to the OpenAI API using a natural language instruction.
 
     """
-    import os
-    import openai
-
-    prompt = request.GET.get('prompt')
+    request.json = json.loads(request.body)
+    prompt = request.json.get('message')
+    prefixPrompt = request.json.get('basePrefixPrompt')
 
     openai.api_key = os.getenv("OPENAI_API_KEY")
+    logging.info("prompt:" + str(prompt))
 
-    basePromptPrefix = """
+    basePrompt = """
     "\"\"\"\nUtil exposes the following:\nutil.openai() -> authenticates & returns the openai module, which has the following functions:\nopenai.Completion.create(\n    prompt=\"<my prompt>\", # The prompt to start completing from\n   max_tokens=123, # The max number of tokens to generate\n    temperature=1.0 # A measure of randomness\n    echo=True, # Whether to return the prompt in addition to the generated completion\n)\n\"\"\"\nimport util\n\"\"\"\nCreate an OpenAI completion starting from the prompt \"Once upon an AI\", no more than 5 tokens. Does not include the prompt.\n\"\"\"\n"
     """
 
-    response = openai.Completion.create(
+    if prefixPrompt:
+        prompt = basePrompt + prefixPrompt + prompt
+    else:
+        prompt = basePrompt + prompt
+    res = openai.Completion.create(
         model="code-davinci-002",
-        prompt=basePromptPrefix + prompt,
+        prompt=prompt,
         temperature=0,
         max_tokens=64,
         top_p=1.0,
@@ -216,59 +241,70 @@ def natural_lang_to_openai_api_gpt(request):
         presence_penalty=0.0,
         stop=["\"\"\""]
     )
-
-    return response.get('choices')[0].get('text')
+    logging.info("res.choices[0].text:" + str(res.choices[0].text))
+    res = {"message": res.choices[0].text,
+           "status_code": 200, "status": "success"}
+    response = JsonResponse(res)
+    response.status_code = 200
+    return response
 
 
 def text_to_command(request):
     """
     Create a command from a natural language instruction.
-
     """
-    import os
-    import openai
-
-    prompt = request.GET.get('prompt')
+    request.json = json.loads(request.body)
+    prompt = request.json.get('message')
+    prefixPrompt = request.json.get('basePrefixPrompt')
 
     openai.api_key = os.getenv("OPENAI_API_KEY")
+    logging.info("prompt:" + str(prompt))
 
-    basePromptPrefix = """
-        Convert this text to a programmatic command:\n\nExample: Ask Constance if we need some bread\nOutput: send-msg `find constance` Do we need some bread?\n\nReach out to the ski store and figure out if I can get my skis fixed before I leave on Thursday\n
+    basePrompt = """
+        Convert this text to a programmatic command:\n\nExample: Ask Constance if we need some bread\nOutput: send-msg `find constance` Do we need some bread?\n
     """
 
-    response = openai.Completion.create(
+    if prefixPrompt:
+        prompt = basePrompt + prefixPrompt + prompt
+    else:
+        prompt = basePrompt + prompt
+    res = openai.Completion.create(
         model="text-davinci-003",
-        prompt=basePromptPrefix + prompt,
+        prompt=prompt,
         temperature=0,
         max_tokens=100,
         top_p=1.0,
         frequency_penalty=0.2,
         presence_penalty=0.0,
-        stop=["\n"]
+        # stop=["\n"]
     )
 
-    return response.get('choices')[0].get('text')
+    logging.info("res.choices[0].text:" + str(res.choices[0].text))
+    res = {"message": res.choices[0].text,
+           "status_code": 200, "status": "success"}
+    response = JsonResponse(res)
+    response.status_code = 200
+    return response
 
 
 def translator(request):
     """
-    Translate English to French.
-
+    Translate Chinese to English.
     """
-    import os
-    import openai
-
-    prompt = request.GET.get('prompt')
+    request.json = json.loads(request.body)
+    prompt = request.json.get('message')
 
     openai.api_key = os.getenv("OPENAI_API_KEY")
+    logging.info("prompt:" + str(prompt))
 
-    basePromptPrefix = """
-    Translate this into 1. French, 2. Spanish and 3. Japanese:\n\nWhat rooms do you have available?\n\n1.
+    basePrompt = """
+    Translate this into English:
     """
 
-    response = openai.Completion.create(
+    prompt = basePrompt + prompt
+    res = openai.Completion.create(
         model="text-davinci-003",
-        prompt=basePromptPrefix + prompt,
+        prompt=prompt,
         temperature=0.3,
         max_tokens=100,
         top_p=1.0,
@@ -276,28 +312,36 @@ def translator(request):
         presence_penalty=0.0
     )
 
-    return response.get('choices')[0].get('text')
+    logging.info("res.choices[0].text:" + str(res.choices[0].text))
+    res = {"message": res.choices[0].text,
+           "status_code": 200, "status": "success"}
+    response = JsonResponse(res)
+    response.status_code = 200
+    return response
 
 
 def natural_lang_to_stripe_api_gpt(request):
     """
-Create code to call the Stripe API using natural language.
-
+    Create code to call the Stripe API using natural language.
     """
-    import os
-    import openai
-
-    prompt = request.GET.get('prompt')
+    request.json = json.loads(request.body)
+    prompt = request.json.get('message')
+    prefixPrompt = request.json.get('basePrefixPrompt')
 
     openai.api_key = os.getenv("OPENAI_API_KEY")
+    logging.info("prompt:" + str(prompt))
 
-    basePromptPrefix = """
+    basePrompt = """
         \"\"\"\nUtil exposes the following:\n\nutil.stripe() -> authenticates & returns the stripe module; usable as stripe.Charge.create etc\n\"\"\"\nimport util\n\"\"\"\nCreate a Stripe token using the users credit card: 5555-4444-3333-2222, expiration date 12 / 28, cvc 521\n\"\"\"
     """
 
-    response = openai.Completion.create(
+    if prefixPrompt:
+        prompt = basePrompt + prefixPrompt + prompt
+    else:
+        prompt = basePrompt + prompt
+    res = openai.Completion.create(
         model="code-davinci-002",
-        prompt=basePromptPrefix + prompt,
+        prompt=prompt,
         temperature=0,
         max_tokens=100,
         top_p=1.0,
@@ -306,4 +350,9 @@ Create code to call the Stripe API using natural language.
         stop=["\"\"\""]
     )
 
-    return response.get('choices')[0].get('text')
+    logging.info("res.choices[0].text:" + str(res.choices[0].text))
+    res = {"message": res.choices[0].text,
+           "status_code": 200, "status": "success"}
+    response = JsonResponse(res)
+    response.status_code = 200
+    return response
