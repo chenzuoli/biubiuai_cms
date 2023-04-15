@@ -49,8 +49,8 @@ function getChatbotResponse(userMessage, chatTextHistory) {
     case "text_to_sql":
       openapi = "/text_to_sql/";
       break;
-    case "customer":
-      openapi = "/customer/";
+    case "customer_gpt":
+      openapi = "/customer_gpt/";
       break;
     case "storyteller":
       openapi = "/storyteller/";
@@ -58,8 +58,8 @@ function getChatbotResponse(userMessage, chatTextHistory) {
     case "translator":
       openapi = "/translator/";
       break;
-    case "teacher":
-      openapi = "/teacher/";
+    case "teacher_gpt":
+      openapi = "/teacher_gpt/";
       break;
     case "lawyer":
       openapi = "/lawyer/";

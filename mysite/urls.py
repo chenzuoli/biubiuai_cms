@@ -8,7 +8,9 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 from search import views as search_views
 
-from .views import chenzuoli, chatgpt, qa_gpt, grammar_correction_gpt, summarizer_gpt, natural_lang_to_openai_api_gpt, text_to_command, translator, natural_lang_to_stripe_api_gpt
+from .views import chenzuoli, chatgpt, qa_gpt, grammar_correction_gpt, summarizer_gpt, \
+    natural_lang_to_openai_api_gpt, text_to_command, translator, natural_lang_to_stripe_api_gpt, \
+    customer_gpt, teacher_gpt
 
 urlpatterns = [
     path("django-admin/", admin.site.urls),
@@ -18,12 +20,17 @@ urlpatterns = [
     path("chenzuoli/", chenzuoli, name="chenzuoli"),
     path('chatgpt/', chatgpt, name='chatgpt'),
     path('qa_gpt/', qa_gpt, name='qa_gpt'),
-    path('grammar_correction_gpt/', grammar_correction_gpt, name='grammar_correction_gpt'),
+    path('grammar_correction_gpt/', grammar_correction_gpt,
+         name='grammar_correction_gpt'),
     path('summarizer_gpt/', summarizer_gpt, name='summarizer_gpt'),
-    path('natural_lang_to_openai_api_gpt/', natural_lang_to_openai_api_gpt, name='natural_lang_to_openai_api_gpt'),
+    path('natural_lang_to_openai_api_gpt/', natural_lang_to_openai_api_gpt,
+         name='natural_lang_to_openai_api_gpt'),
     path('text_to_command/', text_to_command, name='text_to_command'),
     path('translator/', translator, name='translator'),
-    path('natural_lang_to_stripe_api_gpt/', natural_lang_to_stripe_api_gpt, name='natural_lang_to_stripe_api_gpt'),
+    path('natural_lang_to_stripe_api_gpt/', natural_lang_to_stripe_api_gpt,
+         name='natural_lang_to_stripe_api_gpt'),
+    path('customer_gpt/', customer_gpt, name='customer_gpt'),
+    path('teacher_gpt/', teacher_gpt, name='teacher_gpt'),
 ]
 
 
@@ -33,7 +40,8 @@ if settings.DEBUG:
 
     # Serve static and media files from development server
     urlpatterns += staticfiles_urlpatterns()
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
 
 urlpatterns = urlpatterns + [
     # For anything not caught by a more specific rule above, hand over to

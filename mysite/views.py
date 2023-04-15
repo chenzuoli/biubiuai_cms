@@ -306,7 +306,7 @@ def translator(request):
         model="text-davinci-003",
         prompt=prompt,
         temperature=0.3,
-        max_tokens=100,
+        max_tokens=1000,
         top_p=1.0,
         frequency_penalty=0.0,
         presence_penalty=0.0
@@ -344,6 +344,72 @@ def natural_lang_to_stripe_api_gpt(request):
         prompt=prompt,
         temperature=0,
         max_tokens=100,
+        top_p=1.0,
+        frequency_penalty=0.0,
+        presence_penalty=0.0,
+        stop=["\"\"\""]
+    )
+
+    logging.info("res.choices[0].text:" + str(res.choices[0].text))
+    res = {"message": res.choices[0].text,
+           "status_code": 200, "status": "success"}
+    response = JsonResponse(res)
+    response.status_code = 200
+    return response
+
+
+def customer_gpt(request):
+    """
+    You are a customer service agent. You are given a customer's email address and a message. You need to respond to the customer.
+    """
+    request.json = json.loads(request.body)
+    prompt = request.json.get('message')
+
+    openai.api_key = os.getenv("OPENAI_API_KEY")
+    logging.info("prompt:" + str(prompt))
+
+    basePrompt = """
+    You are a customer service representative for a tech company and need to answer customer questions politely and confidently, conveying your professionalism and enthusiasm to the customer, and helping to resolve issues.:
+    """
+
+    prompt = basePrompt + prompt
+    res = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=prompt,
+        temperature=0.3,
+        max_tokens=200,
+        top_p=1.0,
+        frequency_penalty=0.0,
+        presence_penalty=0.0
+    )
+
+    logging.info("res.choices[0].text:" + str(res.choices[0].text))
+    res = {"message": res.choices[0].text,
+           "status_code": 200, "status": "success"}
+    response = JsonResponse(res)
+    response.status_code = 200
+    return response
+
+
+def teacher_gpt(request):
+    """
+    You are a teacher
+    """
+    request.json = json.loads(request.body)
+    prompt = request.json.get('message')
+
+    openai.api_key = os.getenv("OPENAI_API_KEY")
+    logging.info("prompt:" + str(prompt))
+
+    basePrompt = """
+    \"\"\"You are a teacher. In your classroom, you patiently answer students' questions and carefully guide each student\"\"\""""
+
+    prompt = basePrompt + prompt
+    res = openai.Completion.create(
+        model="text-davinci-003",
+        prompt=prompt,
+        temperature=0.3,
+        max_tokens=200,
         top_p=1.0,
         frequency_penalty=0.0,
         presence_penalty=0.0,
