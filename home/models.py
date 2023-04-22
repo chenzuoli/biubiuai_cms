@@ -260,3 +260,15 @@ class OpenaiChatbotPage(Page):
     subpage_types = []
 
     parent_page_types = ['home.HomePage']
+
+
+class ListPage(Page):
+    """
+    List page
+    按照3列方式排列
+    """
+    my_list = RichTextField(blank=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('my_list'),
+    ]

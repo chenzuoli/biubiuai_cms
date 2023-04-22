@@ -5,8 +5,12 @@
 {% block body_class %}template-blankpage{% endblock %}
 
 {% block content %}
-<div class="px-4 py-5 my-5 text-center">
-    <!-- <h1 class="display-5 fw-bold">{{ self.title}}</h1> -->
-    <div>{{ page.content|richtext }}</div>
+<div class="container">
+    <div class="row">
+        <div class="px-4 py-5 my-5">
+            <!-- <h1 class="display-5 fw-bold">{{ self.title}}</h1> -->
+            <div>{{ page.content|richtext }}</div>
+        </div>
+    </div>
 </div>
 {% endblock %}
