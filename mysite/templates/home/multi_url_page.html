@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load static wagtailcore_tags %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      {% for category in categories %}
+        <div class="col-md-4">
+          <h2>{{ category.name }}</h2>
+          <ul>
+            {% for url in category.urls %}
+              <li>
+                <img src="{% static 'path/to/icon.png' %}" alt="{{ url.name }} icon">
+                <a href="{{ url.url }}">{{ url.name }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
