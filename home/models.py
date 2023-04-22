@@ -142,7 +142,7 @@ class BlogPage(Page):
 
     body = RichTextField()
     date = models.DateField("Post date")
-    videourl = models.CharField(max_length=500, blank=False, null=True)
+    videourl = models.CharField(max_length=500, blank=True, null=True)
 
     blogimg = models.ForeignKey(
         "wagtailimages.Image",
