@@ -78,6 +78,8 @@ def chatgpt(request):
     prompt = request.json.get('message')
     basePrefixPrompt = request.json.get('basePrefixPrompt')
 
+    prompt += ", 举个例子来详细说一下"
+
     openai.api_key = os.getenv("OPENAI_API_KEY")
     # print("openai.api_key:" + str(openai.api_key))
     logging.info("prompt:" + str(prompt))
