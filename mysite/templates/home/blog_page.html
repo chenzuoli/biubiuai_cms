@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
+
+{% image page.blogimg fill-500x300 as blogimg %}
+
 <div class="container p-4">
     <div class="row">
         <div class="col-md-6">
@@ -25,7 +28,12 @@
                 {{ page.videourl|richtext }}
             </div>
         </div>
-
+        <!-- 图片居中显示 -->
+        <div class="col-md-12 offset-md-0">
+            <div class="container p-4">
+                <img src="{{ blogimg.url }}" class="rounded mx-auto d-block" alt="{{ blogimg.title }}">
+            </div>
+        </div>
         <div class="col-md-8 offset-md-2">
             <div class="blog-content">
                 <br>
