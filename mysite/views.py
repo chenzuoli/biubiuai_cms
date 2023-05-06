@@ -6,6 +6,10 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import logging
+import base64
+import requests
+import random
+import string
 
 
 def home(request):
@@ -14,9 +18,62 @@ def home(request):
 
 # add a url
 def text_to_image(request):
-    return render(request, 'home/text_to_image.html')
+    """
+    request to stability ai to get image response
+    """
+    request.json = json.loads(request.body)
+    image_prompt = request.json.get('image_prompt')
 
-# add a request to openai api, and return the response, add a parameter: prompt
+    engine_id = "stable-diffusion-v1-5"
+    api_host = os.getenv('API_HOST', 'https://api.stability.ai')
+    api_key = os.getenv("STABILITY_API_KEY")
+
+    if api_key is None:
+        raise Exception("Missing Stability API key.")
+
+    response = requests.post(
+        f"{api_host}/v1/generation/{engine_id}/text-to-image",
+        headers={
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": f"Bearer {api_key}"
+        },
+        json={
+            "text_prompts": [
+                {
+                    "text": image_prompt
+                }
+            ],
+            "cfg_scale": 7,
+            "clip_guidance_preset": "FAST_BLUE",
+            "height": 512,
+            "width": 512,
+            "samples": 1,
+            "steps": 30,
+        },
+    )
+
+    if response.status_code != 200:
+        raise Exception("Non-200 response: " + str(response.text))
+
+    data = response.json()
+
+    for i, image in enumerate(data["artifacts"]):
+        # 生成长度为8的随机字符串
+        random_str = ''.join(random.sample(
+            string.ascii_letters + string.digits, 8))
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        file_path = f"/static/img/text2img/v1_txt2img_{random_str}.png"
+        img_path = base_dir + file_path
+        with open(img_path, "wb") as f:
+            f.write(base64.b64decode(image["base64"]))
+
+    logging.info("generated image path: " + img_path)
+    res = {"img_path": file_path,
+           "status_code": 200, "status": "success"}
+    response = JsonResponse(res)
+    response.status_code = 200
+    return response
 
 
 @csrf_exempt

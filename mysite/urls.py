@@ -10,7 +10,7 @@ from search import views as search_views
 
 from .views import chenzuoli, chatgpt, qa_gpt, grammar_correction_gpt, summarizer_gpt, \
     natural_lang_to_openai_api_gpt, text_to_command, translator, natural_lang_to_stripe_api_gpt, \
-    customer_gpt, teacher_gpt
+    customer_gpt, teacher_gpt, text_to_image
 
 urlpatterns = [
     path("django-admin/", admin.site.urls),
@@ -31,6 +31,7 @@ urlpatterns = [
          name='natural_lang_to_stripe_api_gpt'),
     path('customer_gpt/', customer_gpt, name='customer_gpt'),
     path('teacher_gpt/', teacher_gpt, name='teacher_gpt'),
+    path('text_to_image/', text_to_image, name='text_to_image')
 ]
 
 

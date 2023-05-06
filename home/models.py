@@ -250,6 +250,43 @@ class ChatbotOnlinePage(Page):
         verbose_name_plural = "ChatbotOnlinePages"
 
 
+# chatimgOnlinePage model for chatimg_online_page.html
+class ChatimgOnlinePage(Page):
+    template = "home/chatimg_online_page.html"
+
+    chatimg_online_title = models.CharField(
+        max_length=100, blank=False, null=True)
+
+    chatimg_online_subtitle = RichTextField(features=["bold", "italic"])
+
+    chatimg_online_image = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+        related_name="+"
+    )
+
+    chatimg_online_ctl = models.ForeignKey(
+        "wagtailcore.Page",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+"
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel('chatimg_online_title'),
+        FieldPanel('chatimg_online_subtitle'),
+        FieldPanel("chatimg_online_image"),
+        PageChooserPanel("chatimg_online_ctl")
+    ]
+
+    class Meta:
+        verbose_name = "Chatimg Online Page"
+        verbose_name_plural = "ChatimgOnlinePages"
+
+
 class OpenaiChatbotPage(Page):
     body = RichTextField(blank=True)
 

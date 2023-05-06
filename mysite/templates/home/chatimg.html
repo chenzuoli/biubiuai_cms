@@ -1,0 +1,27 @@
+<!-- 输入提示词，stable diffusion ai进行AI绘画，展示绘画结果 -->
+<div class="container">
+    <div class="row">
+        <!-- imgbot -->
+        <div class="col-md-10">
+            <div class="card" style="height: 500px;">
+                <div class="card-header bg-primary text-white">
+                    Build your image with our Bot
+                </div>
+                <div class="card-body" id="imgbot-container" style="overflow-y: scroll;">
+                    <div id="imgbot-history">
+                        <!-- previous img will be displayed here -->
+                    </div>
+                </div>
+            </div>
+            <br>
+            <form id="imgbot-form">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="imgbot-input" placeholder="在此处输入提示词...">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">生成</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
