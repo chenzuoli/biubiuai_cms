@@ -32,6 +32,8 @@ imgbotForm.addEventListener("submit", function (e) {
     // clear the input field for the next message
     imgbotInput.value = "";
 
+    // scroll to the bottom of the imgbot history
+    scrollImgbot();
 });
 
 
@@ -65,8 +67,8 @@ function getImgbotResponse(userMessage) {
 // 当聊天记录占满chatbot时，进行滚动，利用DIV的scrollIntoView方法，将最底端滚动到可视位置
 function scrollImgbot() {
     imgbotHistory.scrollIntoView(false);
-  }
-  
+}
+
 
 // Define a function named displayImgResponse that takes a parameter named `path`
 // This function will display the image response in the imgbot history by creating a message container, user message element, imgbot response element, and appending them to the imgbot history
@@ -89,6 +91,6 @@ function displayImgResponse(img_path) {
     // clear the user input field
     imgbotInput.value = '';
 
-    // scroll to the bottom of the chatbot history
-    scrollChatbot();
+    // scroll to the bottom of the imgbot history
+    scrollImgbot();
 }
