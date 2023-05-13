@@ -309,3 +309,43 @@ class ListPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('my_list'),
     ]
+
+
+class NewsPage(Page):
+    """
+    展示AI新闻资讯页面
+    """
+    news_subtitle = RichTextField(features=["bold", "italic"])
+
+    news_image = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+        related_name="+"
+    )
+
+    news_body = RichTextField(blank=True)
+
+    news_link = models.URLField(blank=True)
+
+    news_ctl = models.ForeignKey(
+        "wagtailcore.Page",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+"
+    )
+
+    # PageChooserPanel是一个特殊的字段面板，它允许您选择另一个页面作为字段的值。
+    content_panels = Page.content_panels + [
+        FieldPanel('news_subtitle'),
+        FieldPanel("news_image"),
+        FieldPanel("news_body"),
+        FieldPanel("news_link"),
+        PageChooserPanel("news_ctl")
+    ]
+
+    class Meta:
+        verbose_name = "News Page"
+        verbose_name_plural = "NewsPages"
