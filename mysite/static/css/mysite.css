@@ -1,0 +1,8 @@
+/* 限制alert-panel的高度 */
+.alert-panel {
+    background-color: #f44336;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    height: 5px;
+}
