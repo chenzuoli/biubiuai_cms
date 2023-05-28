@@ -12,7 +12,8 @@
 <script>
     function loadPage(pageName) {
         $.ajax({
-            url: "http://127.0.0.1:8000" + pageName,
+            // url: "http://127.0.0.1:8000" + pageName,
+            url: "http://43.153.35.39" + pageName,
             success: function (result) {
                 $("#page-content").html(result);
             }
