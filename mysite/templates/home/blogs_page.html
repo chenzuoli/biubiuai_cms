@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-blankpage{% endblock %}
+
+{% block content %}
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+<script>
+    function loadPage(pageName) {
+        $.ajax({
+            url: "http://127.0.0.1:8000" + pageName,
+            success: function (result) {
+                $("#page-content").html(result);
+            }
+        });
+    }
+</script>
+
+<div class="container p-4">
+    <p>NLP课程</p>
+</div>
+
+<div class="row">
+    <div class="container col-md-3 offset-md-0" style="border-right: 1px solid black;">
+        <div class="container">
+            <!-- 左侧导航栏 -->
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseIntroduction"
+                aria-expanded="false" aria-controls="collapseIntroduction">
+                介绍
+            </button>
+            <div class="collapse show" id="collapseIntroduction">
+                <ul>
+                    <li><a href="#" onclick="loadPage('/blogs/nlp-course/intro-using-huggingface-model')">介绍</a></li>
+                    <li><a href="#" onclick="loadPage('/blogs/nlp-course/intro-nlp')">NLP自然语言处理</a></li>
+                    <li><a href="#" onclick="loadPage('/blogs/nlp-course/intro-transformer')">Transformer</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- 可展开的页签 -->
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUsingModel"
+                aria-expanded="false" aria-controls="collapseUsingModel">
+                使用模型
+            </button>
+            <div class="collapse show" id="collapseUsingModel">
+                <ul>
+                    <li><a href="#"
+                            onclick="loadPage('/blogs/nlp-course/using-model-using-huggingface-model')">使用HuggingFace开源模型</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFineTuneModel"
+                aria-expanded="false" aria-controls="collapseFineTuneModel">
+                微调模型
+            </button>
+            <div class="collapse show" id="collapseFineTuneModel">
+                <ul>
+                    <li><a href="#" onclick="loadPage('/blogs/nlp-course/fine-tune-model-pre-datasets')">预处理数据</a></li>
+                    <li><a href="#" onclick="loadPage('/blogs/nlp-course/fine-tune-model-build-model')">训练</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBuildingModel"
+                aria-expanded="false" aria-controls="collapseBuildingModel">
+                构建模型
+            </button>
+            <div class="collapse show" id="collapseBuildingModel">
+                <ul>
+                    <li><a href="#" onclick="loadPage('/nlp-course/build-model-gradio-intro')">Gradio介绍</a></li>
+                    <li><a href="#" onclick="loadPage('/nlp-course/build-model-base-datasets')">基础数据集</a></li>
+                    <li><a href="#" onclick="loadPage('/nlp-course/build-model-build-model')">模型构建</a></li>
+                    <li><a href="#" onclick="loadPage('/nlp-course/build-model-push-hugging-face')">推送到HuggingFace</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container col-md-8 offset-md-3.2" id="page-content"></div>
+</div>
+
+
+<div class="container p-4"></div>
+
+
+{% endblock %}

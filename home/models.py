@@ -349,3 +349,59 @@ class NewsPage(Page):
     class Meta:
         verbose_name = "News Page"
         verbose_name_plural = "NewsPages"
+
+
+class BlogsPage(Page):
+    subtitle = RichTextField(features=['bold', 'italic'], blank=True)
+    content = RichTextField(blank=True)
+    content_panels = Page.content_panels + [
+        FieldPanel("subtitle"),
+        FieldPanel('content')
+    ]
+
+
+class BlogNoNavPage(Page):
+    template = "home/blog_no_nav_page.html"
+
+    # Database fields
+
+    body = RichTextField()
+    date = models.DateField("Post date")
+    videourl = models.CharField(max_length=500, blank=True, null=True)
+
+    blogimg = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+"
+    )
+
+    feed_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    # Search index configuration
+
+    search_fields = Page.search_fields + [
+        index.SearchField('body'),
+        index.FilterField('date'),
+    ]
+
+    # Editor panels configuration
+
+    content_panels = Page.content_panels + [
+        FieldPanel('date'),
+        FieldPanel('body'),
+        FieldPanel('videourl'),
+        FieldPanel('blogimg'),
+    ]
+
+    promote_panels = [
+        MultiFieldPanel(Page.promote_panels, "Common page configuration"),
+        FieldPanel('feed_image'),
+    ]

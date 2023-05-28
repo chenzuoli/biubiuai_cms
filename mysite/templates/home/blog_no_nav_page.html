@@ -1,0 +1,46 @@
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+{% image page.blogimg fill-500x300 as blogimg %}
+
+
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>{{ page.title }}</h1>
+            <p>{{ page.date }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <!-- youtube -->
+        <!-- <div class="col-md-6">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe width="733" height="412" src="https://www.youtube.com/embed/_AvJwpZQfTU" title="聊聊创业 | 关于我，和我的公司" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+        </div> -->
+        <!-- bilibili 居中显示-->
+        <!-- 占据12列，偏移0列 -->
+        <div class="col-md-11 offset-md-0">
+            <br>
+            <br>
+            <div class="embed-responsive embed-responsive-16by9">
+                {{ page.videourl|richtext }}
+            </div>
+        </div>
+        <!-- 图片居中显示 -->
+        <div class="col-md-11 offset-md-0">
+            <div class="container p-4">
+                <img src="{{ blogimg.url }}" class="rounded mx-auto d-block" alt="{{ blogimg.title }}">
+            </div>
+        </div>
+        <div class="col-md-11 offset-md-0">
+            <div class="blog-content">
+                <br>
+                {{ page.body|richtext }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
