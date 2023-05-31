@@ -10,6 +10,12 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
 <script>
+    $.ajax({
+        url: "http://biubiuai.com/blogs/nlp-course/intro-using-huggingface-model",
+        success: function (result) {
+            $("#page-content").html(result);
+        }
+    });
     function loadPage(pageName) {
         $.ajax({
             // url: "http://127.0.0.1:8000" + pageName,
@@ -37,7 +43,25 @@
                 <ul>
                     <li><a href="#" onclick="loadPage('/blogs/nlp-course/intro-using-huggingface-model')">介绍</a></li>
                     <li><a href="#" onclick="loadPage('/blogs/nlp-course/intro-nlp')">NLP自然语言处理</a></li>
-                    <li><a href="#" onclick="loadPage('/blogs/nlp-course/intro-transformer')">Transformer</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- 左侧导航栏 -->
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseIntroduction"
+                aria-expanded="false" aria-controls="collapseIntroduction">
+                Transformer
+            </button>
+            <div class="collapse show" id="collapseIntroduction">
+                <ul>
+                    <li><a href="#" onclick="loadPage('/blogs/nlp-course/intro-transformer')">Transformer能做什么?</a></li>
+                    <li><a href="#"
+                            onclick="loadPage('/blogs/nlp-course/how-does-transformer-works')">Transformer是如何工作的?</a>
+                    </li>
+                    <li><a href="#" onclick="loadPage('/blogs/nlp-course/encoder-model')">编码器模型</a></li>
+                    <li><a href="#" onclick="loadPage('/blogs/nlp-course/decoder-model')">解码器模型</a></li>
+                    <li><a href="#" onclick="loadPage('/blogs/nlp-course/encoder-decoder-model')">编码器-解码器模型</a></li>
                 </ul>
             </div>
         </div>
