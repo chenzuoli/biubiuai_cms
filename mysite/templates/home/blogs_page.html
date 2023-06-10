@@ -110,6 +110,57 @@
 
         <div class="container">
             <!-- 可展开的页签 -->
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseShareModel"
+                aria-expanded="false" aria-controls="collapseShareModel">
+                构建并分享你的模型
+            </button>
+            <div class="collapse show" id="collapseShareModel">
+                <ul>
+                    <!-- 可展开的页签 -->
+                    <button class="btn btn-link" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseGradioDemo" aria-expanded="false" aria-controls="collapseGradioDemo">
+                        Gradio介绍
+                    </button>
+                    <div class="collapse show" id="collapseGradioDemo">
+                        <ul>
+                            <li><a href="#" onclick="loadPage('/blogs/nlp-course/gradio-introduction')">简介</a></li>
+                            <li><a href="#"
+                                    onclick="loadPage('/blogs/nlp-course/gradio-introduction/draft-recognition-model')">草图识别模型</a>
+                            </li>
+                            <li><a href="#"
+                                    onclick="loadPage('/blogs/nlp-course/gradio-introduction/question-answer-model')">问答模型</a>
+                            </li>
+                            <li><a href="#"
+                                    onclick="loadPage('/blogs/nlp-course/gradio-introduction/background-removal-model')">背景擦除模型</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- 可展开的页签 -->
+                    <button class="btn btn-link" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFirstGradioDemo" aria-expanded="false"
+                        aria-controls="collapseFirstGradioDemo">
+                        构建你的第一个演示
+                    </button>
+                    <div class="collapse show" id="collapseFirstGradioDemo">
+                        <ul>
+                            <li><a href="#" onclick="loadPage('/blogs/nlp-course/build-your-first-demo')">准备</a></li>
+                            <li><a href="#"
+                                    onclick="loadPage('/blogs/nlp-course/build-your-first-demo/hello-world-demo')">Hello-World</a>
+                            </li>
+                            <li><a href="#"
+                                    onclick="loadPage('/blogs/nlp-course/build-your-first-demo/hello-world-custom')">自定义输入组件</a>
+                            </li>
+                            <li><a href="#"
+                                    onclick="loadPage('/blogs/nlp-course/build-your-first-demo/gpt2-text-generation-model')">GPT2文本生成模型</a>
+                            </li>
+                        </ul>
+                    </div>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- 可展开的页签 -->
             <button class="btn btn-link" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapseHowToAskForHelp" aria-expanded="false" aria-controls="collapseHowToAskForHelp">
                 如何寻求帮助
