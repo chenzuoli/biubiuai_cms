@@ -1,14 +1,15 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% load wagtailcore_tags %}
 
 {% block body_class %}template-blankpage{% endblock %}
 
 {% block content %}
 
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.js"></script> -->
+<script type="module" src="{% static './js/ajax.googleapis.com_ajax_libs_jquery_3.5.1_jquery.js' %}"></script>
 <script>
     $.ajax({
         url: "http://biubiuai.com/docs/nlp-course/intro-using-huggingface-model",
