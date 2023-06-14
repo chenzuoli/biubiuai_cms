@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% load static %}
+
+{% block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/marked@3.0.7/marked.min.js"></script>
+
+<script>
+    // 获取Markdown文件的URL
+    var url = '/media/documents/{{ page.markdown_name }}.md';
+
+    // 使用AJAX请求获取Markdown文件内容
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // 将Markdown转换为HTML
+            var html = marked(xhr.responseText);
+
+            // 插入HTML到容器
+            document.getElementById('markdown-container').innerHTML = html;
+        }
+    };
+    xhr.open('GET', url, true);
+    xhr.send();
+</script>
+<div class="container p-4" id="markdown-container"></div>
+
+{% endblock %}

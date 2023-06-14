@@ -405,3 +405,13 @@ class BlogNoNavPage(Page):
         MultiFieldPanel(Page.promote_panels, "Common page configuration"),
         FieldPanel('feed_image'),
     ]
+
+
+class MarkdownPage(Page):
+    # 关于我们页面有一个标题字段和一个内容字段
+    markdown_name = models.CharField(max_length=255)
+
+    # 指定后台管理界面中可以编辑的字段
+    content_panels = Page.content_panels + [
+        FieldPanel('markdown_name')
+    ]
