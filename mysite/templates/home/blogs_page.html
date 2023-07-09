@@ -15,7 +15,7 @@
     $.ajax({
         url: "http://biubiuai.com/docs/nlp-course/intro-using-huggingface-model",
         success: function (result) {
-            $("#page-content").html(result);
+            $("#course-page-content").html(result);
         }
     });
     function loadPage(pageName) {
@@ -23,7 +23,7 @@
             // url: "http://127.0.0.1:8000" + pageName,
             url: "http://biubiuai.com" + pageName,
             success: function (result) {
-                $("#page-content").html(result);
+                $("#course-page-content").html(result);
             }
         });
     }
@@ -197,16 +197,16 @@
             </button>
             <div class="collapse show" id="collapseBuildingModel">
                 <ul>
-                    <li><a href="#" onclick="loadPage('/nlp-course/build-model-gradio-intro')">Gradio介绍</a></li>
-                    <li><a href="#" onclick="loadPage('/nlp-course/build-model-base-datasets')">基础数据集</a></li>
-                    <li><a href="#" onclick="loadPage('/nlp-course/build-model-build-model')">模型构建</a></li>
-                    <li><a href="#" onclick="loadPage('/nlp-course/build-model-push-hugging-face')">推送到HuggingFace</a>
+                    <li><a href="#" onclick="loadPage('/docs/nlp-course/build-model-gradio-intro')">Gradio介绍</a></li>
+                    <li><a href="#" onclick="loadPage('/docs/nlp-course/build-model-base-datasets')">基础数据集</a></li>
+                    <li><a href="#" onclick="loadPage('/docs/nlp-course/build-model-build-model')">模型构建</a></li>
+                    <li><a href="#" onclick="loadPage('/docs/nlp-course/build-model-push-hugging-face')">推送到HuggingFace</a>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="container col-md-8 offset-md-3.2" id="page-content"></div>
+    <div class="container col-md-8 offset-md-3.2" id="course-page-content"></div>
 </div>
 
 
