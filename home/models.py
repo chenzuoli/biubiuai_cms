@@ -408,7 +408,7 @@ class BlogNoNavPage(Page):
 
 
 class MarkdownPage(Page):
-    # 关于我们页面有一个标题字段和一个内容字段
+    # markdown页面，指定markdown文件名，即可展示document下的markdown文件内容
     markdown_name = models.CharField(max_length=255)
 
     # 指定后台管理界面中可以编辑的字段
