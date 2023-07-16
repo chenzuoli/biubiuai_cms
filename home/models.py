@@ -415,3 +415,15 @@ class MarkdownPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('markdown_name')
     ]
+
+
+class ImageModelCardPage(Page):
+    template = "image/image_model_card_page.html"
+
+    # Database fields
+    # 页面介绍
+    subtitle = RichTextField()
+
+    content_panels = Page.content_panels + [
+        FieldPanel("subtitle")
+    ]

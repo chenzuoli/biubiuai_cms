@@ -10,7 +10,6 @@
     <!-- <link rel="stylesheet" href="{% static 'css/mysite.css' %}"> -->
 
     <!-- create a div, import alert-panel style -->
-    <!-- <div class="alert-panel"> -->
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <strong>注意！</strong> 本网站仅供学习交流使用，不得用于商业用途！
         <br>
@@ -39,12 +38,19 @@
                     <li class="nav-item">
                         <a class="nav-link active text-white" aria-current="page" href="/ai-news">资讯</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link active text-white" aria-current="page" href="/chatgpt-online">聊天</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
-                        <a class="nav-link active text-white" aria-current="page" href="/chatimg-online">绘图</a>
+                        <a class="nav-link text-white" href="/free-gpt">聊天工具</a>
                     </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link active text-white" aria-current="page" href="/chatimg-online">绘图</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" aria-current="page" href="/chatimg-online/space/">绘图工具</a>
+                    </li>
+                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -74,9 +80,6 @@
                     <li class="nav-item">
                         <a class="nav-link text-white" href="/prompt-list">提示词</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="/free-gpt">聊天工具</a>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -98,8 +101,11 @@
                             <li><a class="dropdown-item" href="/huggingface-space-share/lmflow-chat/">LMFlow-CHAT</a></li>
                             <li><a class="dropdown-item" href="/huggingface-space-share/chatglm-6b/">清华大学ChatGLM-6B</a></li>
                             <li><a class="dropdown-item" href="/huggingface-space-share/chatglm2-6b/">清华大学ChatGLM2-6B</a></li>
-                            <li><a class="dropdown-item" href="/huggingface-space-share/text-to-video/">文字转视频</a></li>
-                            <li><a class="dropdown-item" href="/huggingface-space-share/music-generation/">音乐生成</a></li>
+                            <li><a class="dropdown-item" href="/huggingface-space-share/text-to-video/">文字转视频模型ZeroScope</a></li>
+                            <li><a class="dropdown-item" href="/huggingface-space-share/music-generation/">音乐生成模型MusicGen</a></li>
+                            <li><a class="dropdown-item" href="/huggingface-space-share/ledits/">图片编辑模型Ledits</a></li>
+                            <li><a class="dropdown-item" href="/huggingface-space-share/ai-webtv/">基于AI的网页版TV</a></li>
+                            
                         </ul>
                     </li>
                     <!-- <li class="nav-item">
