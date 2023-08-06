@@ -439,3 +439,27 @@ class ChatModelCardPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel("subtitle")
     ]
+
+
+class AudioModelCardPage(Page):
+    template = "audio/audio_model_card_page.html"
+
+    # Database fields
+    # 页面介绍
+    subtitle = RichTextField()
+
+    content_panels = Page.content_panels + [
+        FieldPanel("subtitle")
+    ]
+
+
+class VideoModelCardPage(Page):
+    template = "video/video_model_card_page.html"
+
+    # Database fields
+    # 页面介绍
+    subtitle = RichTextField()
+
+    content_panels = Page.content_panels + [
+        FieldPanel("subtitle")
+    ]

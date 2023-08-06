@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+<div class="container p-4">
+    <h1>{{ page.title }}</h1>
+    <h4>{{ page.subtitle|richtext }}</h4>
+</div>
+
+<div class="container p-4">
+    <div class="card text-bg-dark">
+        <img src="/media/images/tech2.jpg" class="card-img" alt="tech2">
+        <div class="card-img-overlay">
+            <h5 class="card-title">无水印高质量16:9视频生成大模型</h5>
+            <p class="card-text">A watermark-free Modelscope-based video model optimized for producing high-quality 16:9 compositions and a smooth video output.</p>
+            <p class="card-text"><small>2023-08-06</small></p>
+            <a href="/huggingface-space-share/text-to-video/" class="card-link">GO</a>
+        </div>
+    </div>
+</div>
+
+<div class="container p-4">
+    <div class="card text-bg-dark">
+        <img src="/media/images/tech3.jpg" class="card-img" alt="tech3">
+        <div class="card-img-overlay">
+            <h5 class="card-title">AI生成内容形式的TV版大模型</h5>
+            <p class="card-text">AI生成内容形式的TV版大模型，请欣赏。</p>
+            <p class="card-text"><small>2023-08-06</small></p>
+            <a href="/huggingface-space-share/ai-webtv/" class="card-link">GO</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
