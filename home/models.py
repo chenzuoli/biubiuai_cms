@@ -463,3 +463,27 @@ class VideoModelCardPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel("subtitle")
     ]
+
+
+class ArticleForBlogPage(Page):
+    template = "article/article_for_blog_page.html"
+
+    # Database fields
+    # 页面介绍
+    subtitle = RichTextField()
+
+    content_panels = Page.content_panels + [
+        FieldPanel("subtitle")
+    ]
+
+
+class ArticleForHuggingfacePage(Page):
+    template = "article/article_for_huggingface_page.html"
+
+    # Database fields
+    # 页面介绍
+    subtitle = RichTextField()
+
+    content_panels = Page.content_panels + [
+        FieldPanel("subtitle")
+    ]
