@@ -34,3 +34,9 @@ stable-diffusion-v1-5
 ```
 stable-diffusion-v1-5
 ```
+
+
+# 启动
+```shell
+python manage.py runserver
+```
