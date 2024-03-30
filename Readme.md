@@ -40,3 +40,17 @@ stable-diffusion-v1-5
 ```shell
 python manage.py runserver
 ```
+
+# 访问后台管理页面
+```http
+http://127.0.0.1:8000/admin
+```
+
+# 使用方法
+1. 新建model
+2. 新建page
+![img.png](img.png)
+3. 对page中的内容、字段进行编辑，命名发布的url
+![img_1.png](img_1.png)
+4. 发布
+![img_2.png](img_2.png)
